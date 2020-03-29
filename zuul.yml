@@ -1,0 +1,42 @@
+spring:
+  profiles:
+    active:
+    - dev
+---
+server:
+  port: 9527
+spring:
+  profiles: dev
+  application:
+    name: springcloud-zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+info:
+  app:
+    name: hand-springcloud-train
+  company:
+    name: www.akitsuki.com
+  build:
+    artifactId: $project.artifactId$
+    version: $project.version$
+zuul:
+  routes:
+    springboot-train-20740-consumer:
+      serviceId: springboot-train-20740-consumer
+      path: /springboot-train-20740-consumer/**
+    img-resource:
+      path: /img/**
+      url: http://localhost/img/
+    static-resource:
+      path: /layui/**
+      url: http://localhost/layui/
+    system-resource:
+      path: /system/**
+      url: http://localhost/system/
+  ignored-services: "*"
